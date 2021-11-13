@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ajax POST Request Repeat</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 100px;
+            border: solid 1px #90b;
+        }
+    </style>
+</head>
+<body>
+    <button>Send the request</button>
+	
+    <script>
+        const btns = document.getElementsByTagName('button');
+
+        let x = null;
+        //add a variable to check the sending request
+        let isSending = false;
+
+        btns[0].onclick = function(){
+            //if the client is sending the request,cancle this request;
+            if(isSending) x.abort();
+
+            x = new XMLHttpRequest();
+            isSending = true;
+            x.open('GET', 'http://127.0.0.1:8000/delay');
+            x.send();
+
+            x.onreadystatechange = function(){
+                if(x.readyState === 4)
+                    isSending = false; 
+            };
+        }
+
+    </script>
+</body>
+</html>
